@@ -1,7 +1,7 @@
 package vakcheck.com.controller;
 
 import vakcheck.com.vacina.Vacina;
-import vakcheck.com.vacina.IEmpresaRepository;
+import vakcheck.com.vacina.IVacinaRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,37 +12,36 @@ import org.springframework.web.bind.annotation.*;
 import vakcheck.com.vacina.*;
 
 @RestController
-@RequestMapping("empresas")
+@RequestMapping("vacinas")
 public class VacinaController {
 
     @Autowired
-    private IEmpresaRepository EmpRepository;
+    private IVacinaRepository VacRepository;
 
     //cadastrar
     @PostMapping
     @Transactional
-    public void cadastroEmpresa(@RequestBody @Valid RDadosCadastroEmpresa dadosEmpresa){
-        EmpRepository.save(new Vacina(dadosEmpresa));
+    public void cadastroEmpresa(@RequestBody @Valid RDadosCadastroVacina dadosEmpresa){
+        VacRepository.save(new Vacina(dadosEmpresa));
     }
     //buscar
     @GetMapping
-    public Page<RDadosListagemEmpresa> listar(@RequestParam(name = "situacaoEmpresa") String situacaoEmpresa, @PageableDefault(size = 10, sort = {"nmFantEmpresa"}) Pageable paginacao){
-        return EmpRepository.findAllBySituacaoEmpresa(situacaoEmpresa, paginacao).map(RDadosListagemEmpresa::new);
+    public Page<RDadosListagemVacina> listar(@RequestParam(name = "idVacina") Long idVacina, @PageableDefault(size = 10, sort = {"idVacina"}) Pageable paginacao){
+        return VacRepository.findAllByIdVacina(idVacina, paginacao).map(RDadosListagemVacina::new);
     }
 
     //atualizar
-    @PutMapping("empresas/{idEmpresa}")
+    @PutMapping("/vacinas/{idVacina}")
     @Transactional
-    public void atualizarEmpresa(@PathVariable Long idEmpresa, @RequestBody @Valid RDadosAtualizacaoEmpresa dadosEmpresa){
-        var empresa = EmpRepository.getReferenceById(dadosEmpresa.id());
-        empresa.atualizarInformacoes(dadosEmpresa);
+    public void atualizarEmpresa(@PathVariable Long idEmpresa, @RequestBody @Valid RDadosAtualizacaoVacina dadosEmpresa){
+        var vacina = VacRepository.getReferenceById(dadosEmpresa.idVacina());
+        vacina.atualizarInformacoes(dadosEmpresa);
     }
 
     //excluir
-    @DeleteMapping("empresas/{idEmpresa}")
+    @DeleteMapping("/vacinas/{idVacina}")
     @Transactional
-    public void excluirEmpresa(@PathVariable Long idEmpresa){
-        var empresa = EmpRepository.getReferenceById(idEmpresa);
-        empresa.excluirEmpresa();
+    public void excluirVacina(@PathVariable Long idVacina){
+        VacRepository.deleteById(idVacina);
     }
 }

@@ -1,12 +1,13 @@
 package vakcheck.com.vacina;
 
 
-import vakcheck.com.endereco.DadosEndereco;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import vakcheck.com.fabricante.Fabricante;
 
 @Table(name = "TB_VACINA")
 @Entity
@@ -17,65 +18,58 @@ import lombok.NoArgsConstructor;
 public class Vacina {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_VACINAVc")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_VACINA")
     @SequenceGenerator(name="SQ_VACINA", sequenceName = "SQ_VACINA")
     @Column(name = "ID_VACINA")
-    private Long idEmpresa;
+    private Long idVacina;
 
-    @Column(name = "NM_VACINA", nullable = false)
-    private String rzSocialEmpresa;
+    @Column(name = "NOME_VACINA", nullable = false)
+    private String nmVacina;
 
-    @Column(name = "LOTE_VACINA", nullable = false)
-    private String nmFantEmpresa;
+    @Column(name = "FX_ETARIA_VACINA", nullable = false)
+    private Long fxEtariaVacina;
 
-    @Column(name = "CNPJ_EMPRESA", nullable = false)
-    private String cnpjEmpresa;
+    @Column(name = "NM_DOSE_VACINA", nullable = false)
+    private Long nmDoseVacina;
 
-    @Column(name = "TEL_EMPRESA", nullable = false)
-    private String telEmpresa;
+    @Column(name = "INTERVALO_DOSE_VACINA", nullable = false)
+    private String intervaloDoseVacina;
 
-    @Column(name = "EMAIL_EMPRESA", nullable = false)
-    private String emailEmpresa;
-
-    @Column(name =  "SITUACAO_EMPRESA", nullable = false)
-    private String situacaoEmpresa;
+    @Column(name =  "LOTE_VACINA", nullable = false)
+    private String loteVacina;
 
     @Embedded
-    private DadosEndereco EnderecoEmpresa;
+    private Fabricante fabricanteVacina;
 
-    //construtor para repository campo empresaUsuario
-    public Vacina(String cnpjEmpresa) {
+    public Vacina(Long idVacina) {
         this();
-        this.cnpjEmpresa = cnpjEmpresa;
+        this.idVacina = idVacina;
     }
 
-    public Vacina(RDadosCadastroEmpresa dadosEmpresa) {
-        this.rzSocialEmpresa = dadosEmpresa.rzSocialEmpresa();
-        this.nmFantEmpresa = dadosEmpresa.nmFantEmpresa();
-        this.cnpjEmpresa = dadosEmpresa.cnpjEmpresa();
-        this.telEmpresa = dadosEmpresa.telEmpresa();
-        this.emailEmpresa = dadosEmpresa.emailEmpresa();
-        this.EnderecoEmpresa = new DadosEndereco();
-    }
-    //metodo para tratar os campos de atualizacao do endereco
-    public void atualizarInformacoes(RDadosAtualizacaoEmpresa dadosEmpresa){
-        if (dadosEmpresa.nmFantEmpresa() != null) {
-            this.nmFantEmpresa = dadosEmpresa.nmFantEmpresa();
-        }
-        if (dadosEmpresa.telEmpresa() != null) {
-            this.telEmpresa = dadosEmpresa.telEmpresa();
-        }
-        if (dadosEmpresa.emailEmpresa() != null) {
-            this.emailEmpresa = dadosEmpresa.emailEmpresa();
-        }
-        if (dadosEmpresa.endereco() != null) {
-            this.EnderecoEmpresa.atualizarInformacoes(dadosEmpresa.endereco());
-        }
-
+    public Vacina(RDadosCadastroVacina dadosVacina) {
+        this.nmVacina = dadosVacina.nmVacina();
+        this.fxEtariaVacina = dadosVacina.fxEtariaVacina();
+        this.nmDoseVacina = dadosVacina.nmDoseVacina();
+        this.intervaloDoseVacina = dadosVacina.intervaloDoseVacina();
+        this.loteVacina = dadosVacina.loteVacina();
+        this.fabricanteVacina = new Fabricante();
     }
 
-    //delete fará empresa ficar inativa
-    public void excluirEmpresa() {
-        this.situacaoEmpresa = "INATIVA";
+    public void atualizarInformacoes(RDadosAtualizacaoVacina dadosVacina){
+        if (dadosVacina.nmVacina() != null) {
+            this.nmVacina = dadosVacina.nmVacina();
+        }
+        if (dadosVacina.fxEtariaVacina() != null) {
+            this.fxEtariaVacina = dadosVacina.fxEtariaVacina();
+        }
+        if (dadosVacina.nmDoseVacina() != null) {
+            this.nmDoseVacina = dadosVacina.nmDoseVacina();
+        }
+        if (dadosVacina.intervaloDoseVacina() != null) {
+            this.intervaloDoseVacina = dadosVacina.intervaloDoseVacina();
+        }
+        if (dadosVacina.loteVacina() != null) {
+            this.loteVacina = dadosVacina.loteVacina();
+        }
     }
 }
