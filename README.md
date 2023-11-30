@@ -11,7 +11,7 @@ Exemplo json:
   {
     "nmVacina": "NovaVacina",
     "fxEtariaVacina": 25,
-    "nmDoseVacina": 1,
+    "nmDoseVacina": "Dose 1",
     "intervaloDoseVacina": "15 dias",
     "loteVacina": "N12345",
     "fabricanteVacina": {
