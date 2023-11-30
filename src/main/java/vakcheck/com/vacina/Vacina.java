@@ -30,7 +30,7 @@ public class Vacina {
     private Long fxEtariaVacina;
 
     @Column(name = "NM_DOSE_VACINA", nullable = false)
-    private Long nmDoseVacina;
+    private String nmDoseVacina;
 
     @Column(name = "INTERVALO_DOSE_VACINA", nullable = false)
     private String intervaloDoseVacina;
@@ -63,7 +63,7 @@ public class Vacina {
             this.fxEtariaVacina = dadosVacina.fxEtariaVacina();
         }
         if (dadosVacina.nmDoseVacina() != null) {
-            this.nmDoseVacina = dadosVacina.nmDoseVacina();
+            this.nmDoseVacina = String.valueOf(dadosVacina.nmDoseVacina());
         }
         if (dadosVacina.intervaloDoseVacina() != null) {
             this.intervaloDoseVacina = dadosVacina.intervaloDoseVacina();

@@ -6,7 +6,7 @@ public record RDadosCadastroVacina(
 
         String nmVacina,
         Long fxEtariaVacina,
-        Long nmDoseVacina,
+        String nmDoseVacina,
         String intervaloDoseVacina,
         String loteVacina,
         RFabricante enderecoEmpresa
