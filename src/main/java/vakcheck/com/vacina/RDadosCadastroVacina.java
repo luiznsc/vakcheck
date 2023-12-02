@@ -9,6 +9,6 @@ public record RDadosCadastroVacina(
         String nmDoseVacina,
         String intervaloDoseVacina,
         String loteVacina,
-        RFabricante enderecoEmpresa
+        RFabricante dadosFabricante
 ) {
 }
